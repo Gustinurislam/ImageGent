@@ -1,15 +1,35 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
 
-function MyComponent() {
-    return (
-        <div>
-            <BeakerIcon className="h-6 w-6 text-blue-500" />
-            <p>...</p>
-        </div>
-    )
-}
+const Header = ({ setListImages, setIsLoading }) => {
+    const [inputValue, setInputValue] = useState('')
 
-const Header = () => {
+    const handleInputChange = (e) => setInputValue(e.target.value)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+            setIsLoading(true)
+            const response = await fetch('http://localhost:5500/openai/images', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt: inputValue
+                })
+            })
+            const jsonData = await response.json();
+            setListImages(jsonData.data)
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     return (
         <div className="bg-gradient-to-r from-[#97d9e1] to-[#d9afd9]">
             {/* Container  */}
@@ -22,9 +42,9 @@ const Header = () => {
                     <p className="font-light opacity-80">Created with AI-powered image generation technology.</p>
 
                     {/* Form  */}
-                    <form className="relative my-8 bg-red-500 max-w-md">
-                        <input className="indent-2 py-4 pr-[4.5rem] rounded-sm bg-gray-50 w-full md:max-w-md focus:ring-primary outline-none focus:ring-1" placeholder="Unleash the power of AI to create" type="text" />
-                        <button className="absolute bottom-2.5 right-2.5 bg-primary text-white px-2 py-2 rounded-sm text-sm">
+                    <form className="relative my-8 max-w-md" onSubmit={handleSubmit}>
+                        <input value={inputValue} onChange={handleInputChange} className="indent-2 py-4 pr-[4.5rem] rounded-sm bg-gray-50 w-full md:max-w-md focus:ring-primary outline-none focus:ring-1" placeholder="Unleash the power of AI to create" type="text" />
+                        <button type='submit' className="absolute bottom-2.5 right-2.5 bg-primary text-white px-2 py-2 rounded-sm text-sm">
                             <ArrowLongRightIcon className='h-6' />
                         </button>
                     </form>
