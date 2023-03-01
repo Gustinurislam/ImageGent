@@ -1,3 +1,4 @@
+import * as LottiePlayer from "@lottiefiles/lottie-player";
 import { ArrowLongRightIcon, BeakerIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 
@@ -31,7 +32,7 @@ const Header = ({ setListImages, setIsLoading }) => {
     }
 
     return (
-        <div className="bg-gradient-to-r from-[#97d9e1] to-[#d9afd9]">
+        <div className="bg-gradient-to-r from-[#97d9e1] to-[#d9afd9] flex items-center">
             {/* Container  */}
             <div className="container mx-auto max-w-5xl px-2 py-6">
                 {/* logo */}
@@ -49,6 +50,16 @@ const Header = ({ setListImages, setIsLoading }) => {
                         </button>
                     </form>
                 </div>
+            </div>
+
+
+            <div className="hidden md:inline">
+                <lottie-player
+                    autoplay
+                    loop
+                    src='https://assets3.lottiefiles.com/packages/lf20_qSkIccSXCE.json'
+                    style={{ width: "300px", height: "300px" }}
+                ></lottie-player>
             </div>
         </div>
     )
