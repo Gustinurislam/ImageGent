@@ -9,4 +9,4 @@
 ## Desktop
 ![Desktop View](ui/desktop.png)
 
-text dummy 1
+text dummy 2
